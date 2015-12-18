@@ -9,8 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.treinamento.springMVC.dao.BaseDAO;
-import br.com.treinamento.springMVC.dao.ContaSingletonDAO;
+import br.com.treinamento.springMVC.dao.ContaDAO;
 import br.com.treinamento.springMVC.model.Conta;
 
 @Controller
@@ -44,7 +43,7 @@ public class ContaController {
 		*/
 		
 		System.out.println("Conta adicionada é: " + conta.getDescricao());
-		BaseDAO dao = new ContaSingletonDAO();
+		ContaDAO dao = new ContaDAO();
 		dao.adiciona(conta);
 		
 //		List<Conta> contas = dao.lista();
@@ -65,7 +64,7 @@ public class ContaController {
 	
 	@RequestMapping("/listaContas")
 	public ModelAndView lista() {
-		BaseDAO dao = new ContaSingletonDAO();
+		ContaDAO dao = new ContaDAO();
 		List<Conta> contas = dao.lista();
 		
 		// Para passar valores do controller para a view pelo spring é necessário passar um objeto 
@@ -75,6 +74,20 @@ public class ContaController {
 		ModelAndView mv = new ModelAndView("conta/lista");
 		mv.addObject("todasContasXX", contas);
 		return mv;
+	}
+	
+	@RequestMapping("/pagaConta")
+	public String paga(Conta conta) {
+		ContaDAO dao = new ContaDAO();
+		dao.paga(conta.getId());
+		return "redirect:listaContas";
+	}
+	
+	@RequestMapping("/removeConta")
+	public String remove(Conta conta) {
+		ContaDAO dao = new ContaDAO();
+		dao.remove(conta);
+		return "redirect:listaContas";
 	}
 	
 }

@@ -16,6 +16,7 @@
 			<th>Tipo</th>
 			<th>Paga?</th>
 			<th>Data de Pagamento</th>
+			<th>Ações</th>
 		</tr>
 
 		<!-- O c:forEach é chamado de JSTL que é uma biblioteca Java que ajuda a escrever um código mais enxuto na jsp -->
@@ -32,6 +33,10 @@
 					<c:if test="${conta.paga eq true}">Paga!</c:if>
 				</td>
 				<td><fmt:formatDate value="${conta.dataPagamento.time}" pattern="dd/MM/yyyy" /></td>
+				<td>
+					<a href="removeConta?id=${conta.id}">Deletar</a> | 
+					<a href="pagaConta?id=${conta.id}">Pagar</a>
+				</td>
 			</tr>
 		</c:forEach>
 --%>
