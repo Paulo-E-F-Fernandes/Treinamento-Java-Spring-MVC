@@ -2,9 +2,15 @@ package br.com.treinamento.springMVC.model;
 
 import java.util.Calendar;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Conta extends BaseModel {
 
+	@NotNull 
+	@Size(min=5, message="{conta.formulario.descricao.tamanho.minimo}")
 	private String descricao;
+	
 	private Boolean paga;
 	private Calendar dataPagamento;
 	private TipoConta tipo;

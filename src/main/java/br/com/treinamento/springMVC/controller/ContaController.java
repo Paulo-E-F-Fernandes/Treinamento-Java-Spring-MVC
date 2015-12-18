@@ -2,7 +2,10 @@ package br.com.treinamento.springMVC.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,7 +25,24 @@ public class ContaController {
 	//	Para que isso ocorra é necessário que o nome dos campos do formulários sejam os mesmos dos 
 	//	atributos da classe.
 	@RequestMapping("/adicionarConta")
-	public String adiciona(Conta conta) {
+	public String adiciona(@Valid Conta conta, BindingResult result) {
+		// BindingResult é o parâmetro em que o Spring MVC guarda o resultado das validações.
+		System.out.println("hasErrors: " + result.hasErrors());
+		if (result.hasErrors()) {
+			return "formulario";
+		}
+		
+		/* Podemos validar se um dado foi preenchida da seguinte maneira, mas a partir do java 6 
+		 * 	a Oracle criou a especificação do Bean Validation que serve para realizar a validação
+		 * 	dos dados de nossas classes, baseada em anotações.
+		 * As validações são colocadas nas entidades da aplicação e no controller é colocada a 
+		 * 	anotação @Valid para indicar os objetos que possuem anotações de validação.
+		 * 
+		if (conta.getDescricao() == null || conta.getDescricao().equals("")) {
+			return "formulario";
+		}
+		*/
+		
 		System.out.println("Conta adicionada é: " + conta.getDescricao());
 		BaseDAO dao = new ContaSingletonDAO();
 		dao.adiciona(conta);
