@@ -1,0 +1,4 @@
+* O Spring MVC é uma servlet, sendo que as aplicações web em java trabalham com servlet's ou jsp's, pois os
+	frameworks são construidos com essas tecnologias.
+* A declaração da servlet do Spring MVC é feita no arquivo "web.xml" na tag <servlet>
+		

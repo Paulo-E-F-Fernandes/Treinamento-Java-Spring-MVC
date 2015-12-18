@@ -1,0 +1,29 @@
+
+			            requisição
+			            (request)
+                   ------------------->  
+         usuário                          servidor
+        (browser)                         (server)
+    	           <-------------------
+                        resposta            
+                       (response)          
+   
+1. o usuário digita uma url no browser que envia para o servidor uma requisição de uma página;
+2. o servidor executa as regras e lógicas de negócio e depois de concluído responda para o usuário
+    com uma página HTML.
+    
+NO SERVIDOR (MVC):
+1. A requisição do usuário chega ao servidor e é atendida pelo CONTROLLER que deve descobrir as 
+	regras de negócio que devem ser executadas, disparando chamadas para o MODEL;
+2. O MODEL tem a responsabilidade de tomar conta das regras de negócio, sendo que uma regra de 
+	negócio pode inclusive acessar um DB e retorna um resultado para o CONTROLLER;
+3. Após o retorno do MODEL, o CONTROLLER dispara uma VIEW que vai gerar um HTML e após isso o 
+	servidor devolve a resposta para o usuário.
+		
+	              -------->
+       -------> C <-------- M ------ DB
+  user <-----   |            
+             |  |
+             |   ---------> V
+             |              |
+              --------------         

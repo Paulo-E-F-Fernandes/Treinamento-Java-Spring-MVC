@@ -1,0 +1,28 @@
+1) Criei um projeto web através do maven:
+	mvn archetype:generate -DgroupId=br.com.treinamento.springMVC 
+		-DartifactId=Treinamento-Java-Spring-MVC -DinteractiveMode=false 
+		-DarchetypeArtifactId=maven-archetype-webapp
+		
+2) Entrei no diretório criado para o projeto e com o maven configurei o build path e dependência
+	para poder utilizar no eclipse e depois importar o projeto no eclipse:
+		mvn eclipse:eclipse -Dwtpversion=2.0
+		
+3) Corrigi erros apresentados:
+	- Java compiler level does not match the version of the installed Java project facet.
+		- SOLUÇÃO: Properties > Project Facets e em Java colocar a versão que utilizará
+	- The superclass "javax.servlet.http.HttpServlet" was not found on the Java Build Path
+		- SOLUÇÃO: Properties > Project Facets,  clicar na aba "Runtimes" à direita da tela e marcar o
+			tomcat.
+		
+4) Adicionei um servidor ao projeto:
+	- Como eu não tinha o servidor tomcat, fiz o download do mesmo no site: https://tomcat.apache.org/
+	- Na aba "Servers" > New Server, selecionei o apache tomcat 7 e na próxima tela indiquei o diretório
+		onde foi descompactado o zip do apache-tomcat
+		
+5) Adicionei o diretório "java" em "src/main" e executei o comando "mvn eclipse:eclipse" para o maven 
+	adicionar o diretório criado no build path. 
+	
+6) Fiz a configuração do web.xml, que é o arquivo principal de uma aplicação java para a web.
+
+7) Fiz a configuração do spring no arquivo "spring-context.xml", que deve ficar onde foi informado no
+	web.xml. O arquivo possui bastante informações, mas é criado somente uma vez.

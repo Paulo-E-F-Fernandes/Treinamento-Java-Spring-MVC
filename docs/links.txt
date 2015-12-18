@@ -1,0 +1,5 @@
+- Para usar o Spring MVC é preciso ter feito o treinamento de Maven antes, pois no site do Spring
+	só é exibido o código para download no Maven.
+
+- Download Spring MVC
+http://projects.spring.io/spring-framework/
