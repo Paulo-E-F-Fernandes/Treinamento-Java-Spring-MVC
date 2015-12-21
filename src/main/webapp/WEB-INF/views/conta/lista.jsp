@@ -5,6 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<script src="resources/js/jquery.js"></script>
+<script type="text/javascript">
+	function deuCertoCallback(dadosDaResposta) {
+		alert("Conta paga com sucesso!");
+	}
+
+	function pagaAgora(id) {}
+		$.get("pagaContaAjax?id=" + id, deuCertoCallback);
+	}
+</script>
+
 </head>
 <body>
 
@@ -34,8 +46,13 @@
 				</td>
 				<td><fmt:formatDate value="${conta.dataPagamento.time}" pattern="dd/MM/yyyy" /></td>
 				<td>
-					<a href="removeConta?id=${conta.id}">Deletar</a> | 
-					<a href="pagaConta?id=${conta.id}">Pagar</a>
+					<a href="removeConta?id=${conta.id}">Deletar</a> |
+					<c:if test="${conta.paga eq false}"> 
+						<!-- Normal -->
+						<!-- <a href="pagaConta?id=${conta.id}">Pagar</a> -->
+						<!-- Com Ajax -->
+						<a href="#" onclick="pagaAgora(${conta.id})">Pagar</a>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

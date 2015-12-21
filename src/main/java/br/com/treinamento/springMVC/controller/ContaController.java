@@ -2,6 +2,7 @@ package br.com.treinamento.springMVC.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -81,6 +82,47 @@ public class ContaController {
 		ContaDAO dao = new ContaDAO();
 		dao.paga(conta.getId());
 		return "redirect:listaContas";
+	}
+	
+	/*
+	 * Como este método para pagar a conta está sendo chamado por Ajax, não é necessário retornar nada
+	 * 	pois no xhtml está apenas exibindo uma alert sem atualizar a tela, então não é necessário fazer
+	 * 	o "redirect:listaContas" pois o mesmo fará um trabalho grande no servidor e este trabalho não 
+	 * 	é necessário.
+	 */
+	@RequestMapping("/pagaContaAjax")
+	public void pagaAjax(Conta conta, HttpServletResponse response) {
+		ContaDAO dao = new ContaDAO();
+		dao.paga(conta.getId());
+		// Como este método não está retornando nada para a tela agora, é necessário informar ao jquery
+		//	que a operação ocorrendo de maneira correta, para isso é necessário setar o status da resposta.
+		response.setStatus(200);
+		
+		/* Status Code
+		 * SUCCESS (2xx) 
+		 * 200 - OK
+		 * 201 - Created
+		 * 202 - Accepted
+		 * 203 - Partial Information
+		 * 204 - No Response
+		 * 
+		 * REDIRECTION (3xx)
+		 * 301 - Moved
+		 * 302 - Found
+		 * 303 - Method
+		 * 304 - Not Modified 
+		 * 
+		 * ERROR (4xx, 5xx)
+		 * 400 - Bad request
+		 * 401 - Unauthorized
+		 * 402 - PaymentRequired
+		 * 403 - Forbidden 
+		 * 404 - Not Found
+		 * 500 - Internal Error
+		 * 501 - Not implemented
+		 * 502 - Service temporarily overloaded (TO BE DISCUSSED)
+		 * 503 - Gateway timeout (TO BE DISCUSSED) 
+		 */
 	}
 	
 	@RequestMapping("/removeConta")

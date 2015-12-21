@@ -15,6 +15,13 @@
 	
 	<!-- Usaremos o Spring MVC configurando-o através de xml e anotações -->
 	<mvc:annotation-driven />
+
+	<!-- Como foi configurado no web.xml que qualquer requisição que chegar 
+		será tratada pelo Spring MVC, precisamos colocar a tag abaixo para que o 
+		Spring saiba que toda a requisição começando com resources/ está requisição 
+		não será para uma action e sim para um recurso, um arquivo JS, uma imagem, 
+		etc. -->
+	<mvc:default-servlet-handler/>
 	
 	<!-- Indica para o Spring MVC o local que os arquivos .jsp ficaram. -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
