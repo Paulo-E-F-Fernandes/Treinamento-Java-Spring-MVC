@@ -1,0 +1,6 @@
+* INTERCEPTORS: são classes em que, todas as requisições antes de acessar as actions, acessam para verificar
+	sem podem acessar as actions requiridas, em caso negativo podem parar a execução da requisição.
+	
+* Para que o Spring MVC identifique que uma classe se trata de um interceptor é necessário que a classe
+	estenda de "HandlerInterceptorAdapter". É necessário também configurar o arquivo spring-context.xml
+	colocando a tag <mvc:interceptors>.

@@ -23,6 +23,11 @@
 		etc. -->
 	<mvc:default-servlet-handler/>
 	
+	<!-- Para ativar os interceptors -->
+	<mvc:interceptors>
+		<bean class="br.com.treinamento.springMVC.interceptor.AutorizadorInterceptor" />
+	</mvc:interceptors>
+	
 	<!-- Indica para o Spring MVC o local que os arquivos .jsp ficaram. -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

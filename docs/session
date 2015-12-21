@@ -1,0 +1,13 @@
+* Sessão (session) é a maneira que o servidor tem de lembrar de algum usuário, isso por que a internet
+	funciona com requisições e respostas, ou seja, o usuário faz uma requisição para o servidor e neste
+	processo é aberta uma conexão entre o usuário e o servidor, mas quando o servidor retorna a resposta 
+	para o usuário, ele fecha a conexão e esquecem quem é o usuário que fez a requisição.
+	
+* Então o recurso para fazer com que o servidor lembre do usuário é a sessão. Para usar a sessão com o 
+	Spring utilizamos a classe HttpSession como parâmetro do método que realiza o login, desta maneira
+	para sinalizar que o usuário fez o login.
+	
+* Como o Session funciona? O Session utiliza os cookies do browser para armazanar uma variável chamada
+	JSessionId. A primeira vez que acessamos o servido, no caso o Tomcat, pede para o browser armazenar
+	está variável e toda vez que o browser fizer uma requisição o valor desta variável é enviado para o
+	servidor, desta forma o servidor identifica que é o usuário do sistema.
