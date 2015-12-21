@@ -27,6 +27,20 @@
 	<mvc:interceptors>
 		<bean class="br.com.treinamento.springMVC.interceptor.AutorizadorInterceptor" />
 	</mvc:interceptors>
+
+	<!-- Configuramos um Data Source para que o Spring saiba como injetar a 
+		Connection no ContaDAO por exemplo. Vamos configurar um Data Source para o mySql. 
+		O BasicDataSource não é do Spring, ele é do Apache Commons (commons-dbcp e commons-pool). -->
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- Nome e classe do driver do banco -->
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<!-- Url do banco -->
+		<property name="url" value="jdbc:hsqldb:file:contas.db" />
+		<!-- Username do banco -->
+		<property name="username" value="" />
+		<!-- Senha do banco -->
+		<property name="password" value="" />
+	</bean>
 	
 	<!-- Indica para o Spring MVC o local que os arquivos .jsp ficaram. -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

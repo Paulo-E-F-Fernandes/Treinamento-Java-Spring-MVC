@@ -1,35 +1,54 @@
 package br.com.treinamento.springMVC.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import br.com.treinamento.springMVC.ConnectionFactory;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import br.com.treinamento.springMVC.model.BaseModel;
 import br.com.treinamento.springMVC.model.Conta;
 import br.com.treinamento.springMVC.model.TipoConta;
 
-public class ContaDAO implements BaseDAO {
+/* A anotação @Repository indica para o Spring que está classe é do tipo repositório, que sabe acesar um
+ 	banco de dados ou algum outro lugar onde guardamos informações. Indica para o Spring que o ContaDAO
+ 	é um DAO. */
+@Repository
+public class ContaDAO {
 	private Connection connection;
 	
-	@Override
-	public void pegaConexao() {
+	// public ContaDAO(Connection connection) {
+	@Autowired
+	public ContaDAO(DataSource ds) {
+		/* 
+		 * Vamos injetar o Connection no ContaDAO, por isso recebemos como parâmetro, mas um vez para 
+		 * 	diminuir o acoplamento.
+		 * 
 		try {
 			this.connection = new ConnectionFactory().getConnection();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		*/
+		//this.connection = connection;
+		try {
+			/* Como foi configurado um DataSource, obtemos a Connection através do DataSource agora. */
+			this.connection = ds.getConnection();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	@Override
 	public void adiciona(BaseModel model) {
 		try {
-			this.pegaConexao();
 			Conta conta = (Conta) model; 
 			String sql = "INSERT INTO contas (descricao, paga, valor, tipo) VALUES (?, ?, ?, ?)";
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -44,7 +63,6 @@ public class ContaDAO implements BaseDAO {
 		}
 	}
 	
-	@Override
 	public void remove(BaseModel model) {
 		Conta conta = (Conta) model;
 		if (conta.getId() == null) {
@@ -52,7 +70,6 @@ public class ContaDAO implements BaseDAO {
 		}
 		
 		try {
-			this.pegaConexao();
 			String sql = "DELETE FROM contas WHERE id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setLong(1, conta.getId());
@@ -63,7 +80,6 @@ public class ContaDAO implements BaseDAO {
 		}
 	}
 
-	@Override
 	public void altera(BaseModel model) {
 		Conta conta = (Conta) model;
 		if (conta.getId() == null) {
@@ -71,7 +87,6 @@ public class ContaDAO implements BaseDAO {
 		}
 		
 		try {
-			this.pegaConexao();		
 			String sql = "UPDATE contas SET descricao = ?, paga = ?, dataPagamento = ?, tipo = ?, valor = ? WHERE id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, conta.getDescricao());
@@ -87,10 +102,8 @@ public class ContaDAO implements BaseDAO {
 		}
 	}
 	
-	@Override
 	public List<Conta> lista() {
 		try {
-			this.pegaConexao();
 			List<Conta> contas = new ArrayList<Conta>();
 			String sql = "SELECT * FROM contas";
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -115,7 +128,6 @@ public class ContaDAO implements BaseDAO {
 		}
 		
 		try {
-			this.pegaConexao();
 			String sql = "SELECT * FROM contas WHERE id = ?";
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setLong(1, id);

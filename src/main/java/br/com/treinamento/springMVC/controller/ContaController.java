@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +16,28 @@ import br.com.treinamento.springMVC.model.Conta;
 
 @Controller
 public class ContaController {
+	
+	// Com tem muitas instanciação do ContaDAO, vamos colocar ele como um atributo da classe.
+	private ContaDAO dao;
+	
+	/* Para fazer o Spring injetar a dependência, por exemplo o ContaDAO, indicamos para ele com
+		a anotação @Autowired o método construtor que queremos que ocorrá a injeção.
+	   Agora o Spring sabe que ao instanciar está classe precisa passar o ContaDAO no construtor. */
+	@Autowired
+	public ContaController(ContaDAO dao) {
+		// Uma boa prática é receber o ContaDAO e não instancia-lo e com isso diminuiremos o aclopamento. 
+		// dao = new ContaDAO();
+		this.dao = dao;
+	}
 
 	@RequestMapping("/form")
 	public String formulario() {
 		return "formulario";
 	}
 	
-	// O parametro Conta é populado automaticamente pelo Spring MVC com as informações que estão na tela.
-	//	Para que isso ocorra é necessário que o nome dos campos do formulários sejam os mesmos dos 
-	//	atributos da classe.
+	/* O parametro Conta é populado automaticamente pelo Spring MVC com as informações que estão na tela.
+		Para que isso ocorra é necessário que o nome dos campos do formulários sejam os mesmos dos 
+		atributos da classe. */
 	@RequestMapping("/adicionarConta")
 	public String adiciona(@Valid Conta conta, BindingResult result) {
 		// BindingResult é o parâmetro em que o Spring MVC guarda o resultado das validações.
@@ -44,7 +58,7 @@ public class ContaController {
 		*/
 		
 		System.out.println("Conta adicionada é: " + conta.getDescricao());
-		ContaDAO dao = new ContaDAO();
+		//ContaDAO dao = new ContaDAO();
 		dao.adiciona(conta);
 		
 //		List<Conta> contas = dao.lista();
@@ -65,7 +79,7 @@ public class ContaController {
 	
 	@RequestMapping("/listaContas")
 	public ModelAndView lista() {
-		ContaDAO dao = new ContaDAO();
+		//ContaDAO dao = new ContaDAO();
 		List<Conta> contas = dao.lista();
 		
 		// Para passar valores do controller para a view pelo spring é necessário passar um objeto 
@@ -79,7 +93,7 @@ public class ContaController {
 	
 	@RequestMapping("/pagaConta")
 	public String paga(Conta conta) {
-		ContaDAO dao = new ContaDAO();
+		//ContaDAO dao = new ContaDAO();
 		dao.paga(conta.getId());
 		return "redirect:listaContas";
 	}
@@ -92,7 +106,7 @@ public class ContaController {
 	 */
 	@RequestMapping("/pagaContaAjax")
 	public void pagaAjax(Conta conta, HttpServletResponse response) {
-		ContaDAO dao = new ContaDAO();
+		//ContaDAO dao = new ContaDAO();
 		dao.paga(conta.getId());
 		// Como este método não está retornando nada para a tela agora, é necessário informar ao jquery
 		//	que a operação ocorrendo de maneira correta, para isso é necessário setar o status da resposta.
@@ -127,7 +141,7 @@ public class ContaController {
 	
 	@RequestMapping("/removeConta")
 	public String remove(Conta conta) {
-		ContaDAO dao = new ContaDAO();
+		//ContaDAO dao = new ContaDAO();
 		dao.remove(conta);
 		return "redirect:listaContas";
 	}

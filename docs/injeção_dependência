@@ -1,0 +1,5 @@
+* O Spring MVC é um container de Injeção de Dependência. Como o ContaController depende de um DAO, o Spring
+	fará a injeção deste DAO.
+	
+* É necessário configurar um data source no spring-context.xml para que o Spring saiba injetar as 
+	dependências do Connection nos DAOs.
