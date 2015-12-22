@@ -11,22 +11,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.treinamento.springMVC.dao.ContaDAO;
+import br.com.treinamento.springMVC.dao.conta.ContaBaseDAO;
+import br.com.treinamento.springMVC.dao.conta.ContaSingletonDAO;
 import br.com.treinamento.springMVC.model.Conta;
 
 @Controller
 public class ContaController {
 	
 	// Com tem muitas instanciação do ContaDAO, vamos colocar ele como um atributo da classe.
-	private ContaDAO dao;
+	private ContaBaseDAO dao;
 	
 	/* Para fazer o Spring injetar a dependência, por exemplo o ContaDAO, indicamos para ele com
 		a anotação @Autowired o método construtor que queremos que ocorrá a injeção.
 	   Agora o Spring sabe que ao instanciar está classe precisa passar o ContaDAO no construtor. */
-	@Autowired
+/*	@Autowired
 	public ContaController(ContaDAO dao) {
 		// Uma boa prática é receber o ContaDAO e não instancia-lo e com isso diminuiremos o aclopamento. 
 		// dao = new ContaDAO();
+		this.dao = dao;
+	}
+*/	
+	@Autowired
+	public ContaController(ContaSingletonDAO dao) {
+		/* Não tenho banco - Descomentar no spring-context.xml */
 		this.dao = dao;
 	}
 
@@ -143,6 +150,14 @@ public class ContaController {
 	public String remove(Conta conta) {
 		//ContaDAO dao = new ContaDAO();
 		dao.remove(conta);
+		
+		// Existe duas maneiras de redirecionar para uma action
+		// foward: - altera a url. o forward fez a requisição para remover a conta e depois de remover a 
+		//	a conta foi feito o redirecionando para a lista, por isso que a url manteve a action da remoção
+		//	da conta. REDIRECIONAMENTO NO LADO DO SERVIDOR.
+		// redirect: - não muda a url. fez a requisição para remover a conta e depois de remover a conta
+		// 	o server solicita que o browser faça mais uma nova requisição para listaContas. REDIRECIONAMENTO NO 
+		//	LADO DO CLIENTE.
 		return "redirect:listaContas";
 	}
 	

@@ -28,11 +28,11 @@ public class InfraController {
 		PreparedStatement st2 = c.prepareStatement(sql);
 		st2.execute();
 
-		sql = "CREATE TABLE usuarios (login VARCHAR(255), senha VARCHAR(255));";
+		sql = "CREATE TABLE usuarios (id int identity, login VARCHAR(255), senha VARCHAR(255));";
 		PreparedStatement st22 = c.prepareStatement(sql);
 		st22.execute();
 
-		sql = "INSERT INTO usuarios (login, senha) VALUES ('caelum', 'online');";
+		sql = "INSERT INTO usuarios (id, login, senha) VALUES ('caelum', 'online');";
 		PreparedStatement st3 = c.prepareStatement(sql);
 		st3.execute();
 		

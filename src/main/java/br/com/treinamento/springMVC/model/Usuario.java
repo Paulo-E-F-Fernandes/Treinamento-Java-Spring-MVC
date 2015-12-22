@@ -1,6 +1,6 @@
 package br.com.treinamento.springMVC.model;
 
-public class Usuario {
+public class Usuario extends BaseModel {
 
 	private String login;
 	private String senha;
@@ -20,5 +20,5 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
+	
 }
