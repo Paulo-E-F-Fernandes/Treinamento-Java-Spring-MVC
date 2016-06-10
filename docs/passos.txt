@@ -8,7 +8,7 @@
 		mvn eclipse:eclipse -Dwtpversion=2.0
 		
 3) Corrigi erros apresentados:
-	- Java compiler level does not match the version of the installed Java project facet.
+	- Faceted Project Problem > Java compiler level does not match the version of the installed Java project facet.
 		- SOLUÇÃO: Properties > Project Facets e em Java colocar a versão que utilizará
 	- The superclass "javax.servlet.http.HttpServlet" was not found on the Java Build Path
 		- SOLUÇÃO: Properties > Project Facets,  clicar na aba "Runtimes" à direita da tela e marcar o
